@@ -16,7 +16,8 @@ namespace employeeListAndTask
         private static string[] dataFirstNames;
         private static string[] dataLastNames;
 
-        private string[] dataJ;
+        private string[] dataJobsName;
+        private string[] dataJobsProcess;
         private string[] IsDoneJoba;
 
 
@@ -32,9 +33,10 @@ namespace employeeListAndTask
             CheckFile checkFile = new CheckFile();
             checkFile.ChcekFile();
 
+            dataJobsProcess = File.ReadAllLines(checkFile.phtjobsProcess);
             dataFirstNames = File.ReadAllLines(checkFile.phtFirstName);
             dataLastNames = File.ReadAllLines(checkFile.phtLastName);
-            dataJ = File.ReadAllLines(checkFile.phtjobs);
+            dataJobsName = File.ReadAllLines(checkFile.phtjobsName);
             IsDoneJoba = File.ReadAllLines(checkFile.phtjobsDone);
         }
 
@@ -59,9 +61,13 @@ namespace employeeListAndTask
         {
             await LoadingData();
             dataFirstNames = Array.Empty<string>();
-            dataJ = Array.Empty<string>();
+            dataJobsProcess = Array.Empty<string>();
+            dataJobsName = Array.Empty<string>();
+            dataJobsName = Array.Empty<string>();
         }
+
         int i = 0;
+
         /// <summary>
         /// Loading data from file to dataGridView
         /// </summary>
@@ -71,13 +77,18 @@ namespace employeeListAndTask
             {
                 try
                 {
-                   if (IsDoneJoba.Length > i)
-                         dataGridView1.Rows.Add(dataFirstNames[i], dataLastNames[i], dataJ[i], dataJ[i], IsDoneJoba[i]);
+                   if (IsDoneJoba.Length > i && dataLastNames.Length > i && dataJobsProcess.Length > i && dataJobsName.Length > i)
+                         dataGridView1.Rows.Add(dataFirstNames[i], dataLastNames[i], dataJobsName[i], dataJobsProcess[i], IsDoneJoba[i]);
                     else
-                        dataGridView1.Rows.Add(dataFirstNames[i], dataLastNames[i], dataJ[i], dataJ[i], MD);
+                        dataGridView1.Rows.Add(dataFirstNames[i], MD, MD, MD, MD);
                     i++;
                     await Task.Delay(1);
+
                     label1.Text = " Check file : " + dataFirstNames.Length / 2;
+
+                    bool a = int.TryParse(dataJobsProcess[i], out int Value);
+
+                    progressBar1.Value = Value;
                     
                 }
                 catch (Exception)

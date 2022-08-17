@@ -10,13 +10,15 @@ namespace Checkfile
     internal class CheckFile
     {
         public string phtFirstName = @"C:\SaveEmployee\FirstName.txt";
-        public string phtjobs = @"C:\SaveEmployee\EmployeeJobs.txt";
+        public string phtjobsName = @"C:\SaveEmployee\EmployeeJobsName.txt";
+        public string phtjobsProcess = @"C:\SaveEmployee\EmployeeJobsProcess.txt";
         public string phtLastName = @"C:\SaveEmployee\LastName.txt";
         public string phtjobsDone = @"C:\SaveEmployee\EmployeeJobIsDone.txt";
 
+        public List<string> JobsProcess = new List<string>();
         public List<string> Firstname = new List<string>();
         public List<string> Lastname = new List<string>();
-        public List<string> Jobs = new List<string>();
+        public List<string> JobsName = new List<string>();
         public List<string> IsDone = new List<string>();
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace Checkfile
         
         public void ChcekFile()
         {
-            if (File.Exists(phtFirstName) && File.Exists(phtjobsDone) && File.Exists(phtjobs) && File.Exists(phtLastName))
+            if (File.Exists(phtFirstName) && File.Exists(phtjobsDone) && File.Exists(phtjobsProcess) && File.Exists(phtLastName)&&File.Exists(phtjobsName))
             {
                 Console.WriteLine("files is exists!");
             }
@@ -33,7 +35,8 @@ namespace Checkfile
             {
                 File.Create(phtFirstName);
                 File.Create(phtLastName);
-                File.Create(phtjobs);
+                File.Create(phtjobsName);
+                File.Create(phtjobsProcess);
                 File.Create(phtjobsDone);
             }
         }
@@ -51,15 +54,16 @@ namespace Checkfile
             string dj = DoneJob.ToString();
             string nj = Job.ToString();
 
-            Jobs.Add(pj);
-            Jobs.Add(nj);
+            JobsProcess.Add(pj);
+            JobsName.Add(nj);
             IsDone.Add(dj);
 
             File.WriteAllLinesAsync(phtFirstName, Firstname, System.Text.Encoding.Unicode);
             File.WriteAllLinesAsync(phtLastName, Lastname, System.Text.Encoding.Unicode);
 
             File.WriteAllLinesAsync(phtjobsDone, IsDone, System.Text.Encoding.Unicode);
-            File.WriteAllLinesAsync(phtjobs, Jobs, System.Text.Encoding.Unicode);
+            File.WriteAllLinesAsync(phtjobsName, JobsName, System.Text.Encoding.Unicode);
+            File.WriteAllLinesAsync(phtjobsProcess, JobsProcess, System.Text.Encoding.Unicode);
         }
     }
 }
